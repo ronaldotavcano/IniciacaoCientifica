@@ -25,8 +25,9 @@ lerna-debug.log*
 *.sw?
 
 # Nix
+.envrc
 .direnv/
 result
 result-*
 # NÃO ignorar flake.lock — ele precisa ir para o git
-# para garantir reprodutibilidade
+# para garantir reprodutibilidade.envrc
