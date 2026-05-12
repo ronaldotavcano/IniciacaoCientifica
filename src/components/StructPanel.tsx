@@ -86,7 +86,12 @@ void enqueue(Fila *f, int valor) {
   },
 ]
 
-export default function StructPanel() {
+interface StructPanelProps {
+  activeStructure: string
+  onStructureChange: (value: string) => void
+}
+
+export default function StructPanel({ activeStructure, onStructureChange }: StructPanelProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="px-4 py-3 border-b border-border flex items-center gap-2">
@@ -95,7 +100,7 @@ export default function StructPanel() {
         </span>
       </div>
 
-      <Tabs defaultValue="lista-simples" className="flex flex-col flex-1 overflow-hidden">
+      <Tabs value={activeStructure} onValueChange={onStructureChange} className="flex flex-col flex-1 overflow-hidden">
         <TabsList className="w-full justify-start rounded-none border-b border-border bg-transparent px-4 gap-1 h-10 shrink-0">
           {STRUCTURES.map(s => (
             <TabsTrigger

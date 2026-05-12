@@ -6,8 +6,8 @@ export default function HomePage() {
   const [dividerPct, setDividerPct] = useState(35)
   const [isDragging, setIsDragging] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
- 
   const onMouseDown = useCallback(() => setIsDragging(true), [])
+  const [activeStructure, setActiveStructure] = useState("lista-simples")
  
   useEffect(() => {
     if (!isDragging) return
@@ -40,7 +40,7 @@ export default function HomePage() {
         className="flex flex-col border-r border-border overflow-hidden"
         style={{ width: `${dividerPct}%` }}
       >
-        <StructPanel />
+        <StructPanel activeStructure={activeStructure} onStructureChange={setActiveStructure} />
       </div>
  
       <div
@@ -50,7 +50,7 @@ export default function HomePage() {
       />
  
       <div className="flex flex-col flex-1 overflow-hidden">
-        <FlowPanel />
+        <FlowPanel activeStructure={activeStructure}/>
       </div>
     </div>
   )
