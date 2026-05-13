@@ -14,6 +14,7 @@ export function SimpleNode({ data }: { data: { value: number } }) {
         </div>
 
       </div>
+
       <Handle type="target" position={Position.Left} />
       <Handle type="source" position={Position.Right} />
     </div>
@@ -43,6 +44,27 @@ export function DoubleNode({ data }: { data: { value: number } }) {
 
       <Handle type="target" position={Position.Top} id="target-top" />
       <Handle type="target" position={Position.Bottom} id="target-bottom" />
+    </div>
+  )
+}
+
+export function StackNode({ data }: { data: { value: number } }) {
+  return (
+    <div>
+      <div className="flex flex-col border-[1.5px] border-gray-400 dark:border-border bg-card rounded-lg">
+
+      <div className="border-b-[1.5px] border-gray-400 dark:border-border py-2 px-3 flex items-center justify-center">
+        <span className="text-[10px] text-muted-foreground font-mono">*prox</span>
+      </div>
+
+      <div className="py-2 px-4 text-foreground font-medium flex items-center justify-center">
+        {data.value}
+      </div>
+
+      </div>
+
+      <Handle type="target" position={Position.Top} />
+      <Handle type="source" position={Position.Bottom} />
     </div>
   )
 }

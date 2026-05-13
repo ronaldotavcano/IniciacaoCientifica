@@ -1,10 +1,12 @@
 import { ReactFlow, Background, Controls, BackgroundVariant, type Node, type Edge } from "@xyflow/react"
 import "@xyflow/react/dist/style.css"
-import { DoubleNode, SimpleNode } from "./nodes/StructNodes"
+import { DoubleNode, SimpleNode, StackNode } from "./nodes/StructNodes"
 
 const nodeTypes = {
   "lista-simples":SimpleNode,
   "lista-dupla":DoubleNode,
+  "pilha":StackNode,
+  "fila":SimpleNode,
 }
 
 const STRUCTURE_NODES: Record<string, Node[]> = {
@@ -18,8 +20,16 @@ const STRUCTURE_NODES: Record<string, Node[]> = {
     { id: "node-2", position: { x: 320, y: 160 }, data: { value: 20 }, type: "lista-dupla" },
     { id: "node-3", position: { x: 560, y: 160 }, data: { value: 30 }, type: "lista-dupla" },
   ],
-  "pilha": [],
-  "fila": [],
+  "pilha": [
+    { id: "node-1", position: { x: 80, y: 60 }, data: { value: 10 }, type: "pilha" },
+    { id: "node-2", position: { x: 80, y: 260 }, data: { value: 20 }, type: "pilha" },
+    { id: "node-3", position: { x: 80, y: 460 }, data: { value: 30 }, type: "pilha" },
+  ],
+  "fila": [
+    { id: "node-1", position: { x: 80, y: 160 }, data: { value: 10 }, type: "lista-simples" },
+    { id: "node-2", position: { x: 280, y: 160 }, data: { value: 20 }, type: "lista-simples" },
+    { id: "node-3", position: { x: 480, y: 160 }, data: { value: 30 }, type: "lista-simples" },
+  ],
 }
 
 const STRUCTURE_EDGES: Record<string, Edge[]> = {
@@ -33,8 +43,14 @@ const STRUCTURE_EDGES: Record<string, Edge[]> = {
     { id: "e3-2", source: "node-3", sourceHandle: "source-ante", target: "node-2", targetHandle: "target-bottom", animated: true },
     { id: "e2-1", source: "node-2", sourceHandle: "source-ante", target: "node-1", targetHandle: "target-bottom", animated: true },
   ],
-  "pilha": [],
-  "fila": [],
+  "pilha": [
+    { id: "e1-2", source: "node-1", target: "node-2", animated: true },
+    { id: "e2-3", source: "node-2", target: "node-3", animated: true },
+  ],
+  "fila": [
+    { id: "e1-2", source: "node-1", target: "node-2", animated: true },
+    { id: "e2-3", source: "node-2", target: "node-3", animated: true },
+  ],
 }
 
 interface FlowPanelProps {

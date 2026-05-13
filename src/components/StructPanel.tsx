@@ -9,15 +9,14 @@ const STRUCTURES = [
     description: "Cada nó aponta para o próximo. O último aponta para NULL.",
     code: `#include <stdio.h>
 #include <stdlib.h>
-
 typedef struct No {
     int dado;
     struct No *prox;
 } No;
-
+  
 // Complete a função abaixo:
 No* criarNo(int valor) {
-
+  
 }`,
   },
   {
@@ -26,17 +25,16 @@ No* criarNo(int valor) {
     badge: "⇄",
     description: "Cada nó aponta para o próximo e para o anterior.",
     code: `#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct No {
-    int dado;
-    struct No *prox;
-    struct No *ante;
-} No;
-
-// Complete a função abaixo:
-No* criarNo(int valor) {
-
+  #include <stdlib.h>
+    
+  typedef struct No {
+      int dado;
+      struct No *prox;
+      struct No *ante;
+  } No;
+    
+  // Complete a função abaixo:
+  No* criarNo(int valo
 }`,
   },
   {
@@ -46,19 +44,19 @@ No* criarNo(int valor) {
     description: "Inserção e remoção sempre no topo. Last In, First Out.",
     code: `#include <stdio.h>
 #include <stdlib.h>
-
+  
 typedef struct No {
     int dado;
     struct No *prox;
 } No;
-
+  
 typedef struct {
     No *topo;
 } Pilha;
-
+  
 // Complete as funções abaixo:
 void push(Pilha *p, int valor) {
-
+  
 }`,
   },
   {
@@ -68,20 +66,20 @@ void push(Pilha *p, int valor) {
     description: "Inserção no fim, remoção no início. First In, First Out.",
     code: `#include <stdio.h>
 #include <stdlib.h>
-
+  
 typedef struct No {
     int dado;
     struct No *prox;
 } No;
-
+  
 typedef struct {
     No *inicio;
     No *fim;
 } Fila;
-
+  
 // Complete as funções abaixo:
 void enqueue(Fila *f, int valor) {
-
+  
 }`,
   },
 ]
@@ -137,14 +135,7 @@ export default function StructPanel({ activeStructure, onStructureChange }: Stru
                 readOnly
                 defaultValue={s.code}
                 spellCheck={false}
-                className="
-                  flex-1 resize-none bg-transparent
-                  px-4 py-4
-                  text-xs font-mono leading-6
-                  text-foreground
-                  focus:outline-none
-                  overflow-auto
-                "
+                className="flex-1 resize-none bg-transparent px-4 py-4 text-xs font-mono leading-6 text-foreground focus:outline-none overflow-aut "
               />
             </div>
           </TabsContent>

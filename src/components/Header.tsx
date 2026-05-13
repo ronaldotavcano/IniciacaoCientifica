@@ -6,21 +6,9 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme()
  
   return (
-    <header className="
-      sticky top-0 z-50
-      flex items-center justify-between
-      h-14 px-6
-      bg-background border-b border-border
-    ">
-      {/* Logo */}
+    <header className=" sticky top-0 z-50 flex items-center justify-between h-14 px-6 bg-background border-b border-border ">
       <div className="flex items-center gap-2">
-        <div className="
-          w-7 h-7 rounded-md
-          bg-primary
-          flex items-center justify-center
-          text-primary-foreground text-sm font-bold
-          select-none
-        ">
+        <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold select-none">
           P
         </div>
         <span className="font-semibold text-base tracking-tight">
@@ -28,7 +16,6 @@ export default function Header() {
         </span>
       </div>
  
-      {/* Nav links + toggle */}
       <nav className="flex items-center gap-1">
         <Button variant="ghost" size="sm" asChild>
           <a href="/sobre">Sobre</a>
@@ -37,10 +24,8 @@ export default function Header() {
           <a href="/docs">Documentação</a>
         </Button>
  
-        {/* Divisor visual */}
         <div className="w-px h-5 bg-border mx-2" />
  
-        {/* Toggle dark mode */}
         <Button
           variant="ghost"
           size="icon"
