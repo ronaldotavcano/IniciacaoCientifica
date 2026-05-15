@@ -1,4 +1,5 @@
 import octocatSrc from "../assets/images/octacat.png"
+import fotoPerfil from "../assets/images/foto-perfil.png"
 
 export default function NotFound() {
 
@@ -134,15 +135,15 @@ export default function NotFound() {
         </p>
 
         <div className="w-16 h-16 mx-auto border border-[#8b5e2a] bg-[#ffe0b2] overflow-hidden">
-          <img
-            src={octocatSrc}
-            alt="Octocat"
+          <a href="https://github.com/ronaldotavcano" target="_blank"><img
+            src={fotoPerfil}
+            alt="minha foto"
             className="w-full h-full object-cover object-top"
             style={{ filter: "sepia(0.5) contrast(0.9)" }}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).style.display = "none";
             }}
-          />
+          /></a>
         </div>
 
         <p className="text-[8px] text-[#3a1a00] text-center mt-1">RECOMPENSA</p>
