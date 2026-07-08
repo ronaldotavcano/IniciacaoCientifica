@@ -8,6 +8,7 @@ export default function HomePage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const onMouseDown = useCallback(() => setIsDragging(true), [])
   const [activeStructure, setActiveStructure] = useState("lista-simples")
+  const [submittedFormData, setSubmittedFormData] = useState<FormData | null>(null)
  
   useEffect(() => {
     if (!isDragging) return
@@ -40,7 +41,7 @@ export default function HomePage() {
         className="flex flex-col border-r border-border overflow-hidden"
         style={{ width: `${dividerPct}%` }}
       >
-        <StructPanel activeStructure={activeStructure} onStructureChange={setActiveStructure} />
+        <StructPanel activeStructure={activeStructure} onStructureChange={setActiveStructure} onFormSubmit={setSubmittedFormData} />
       </div>
  
       <div
@@ -50,7 +51,7 @@ export default function HomePage() {
       />
  
       <div className="flex flex-col flex-1 overflow-hidden">
-        <FlowPanel activeStructure={activeStructure}/>
+        <FlowPanel activeStructure={activeStructure} formData={submittedFormData}/>
       </div>
     </div>
   )

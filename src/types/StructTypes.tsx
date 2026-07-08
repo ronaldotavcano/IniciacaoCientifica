@@ -6,7 +6,7 @@ export interface SimpleListFormData {
 export interface DoubleListFormData {
   structName: string
   nextPointerName: string
-  previousPointerName: string
+  prevPointerName: string
 }
 
 export interface StackFormData {

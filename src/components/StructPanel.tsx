@@ -1,8 +1,18 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import StructForm from "./StructForm"
-import { useState } from "react"
-import { type FormData, type DoubleListFormData, type SimpleListFormData, type StackFormData, type QueueFormData } from "@/types/StructTypes"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import SimpleListForm from "./forms/SimpleListForm";
+import DoubleListForm from "./forms/DoubleListForm";
+import StackForm from "./forms/StackForm";
+import QueueForm from "./forms/QueueForm";
+
+import {
+  type FormData,
+  type DoubleListFormData,
+  type SimpleListFormData,
+  type StackFormData,
+  type QueueFormData,
+} from "@/types/StructTypes";
 
 const STRUCTURES = [
   {
@@ -29,34 +39,34 @@ const STRUCTURES = [
     badge: "FIFO",
     description: "Inserção no fim, remoção no início. First In, First Out.",
   },
-]
+];
 
 function generateCode(structure: string, data: FormData): string {
-  if (structure === "lista-simples"){
-    const d = data as SimpleListFormData
+  if (structure === "lista-simples") {
+    const d = data as SimpleListFormData;
     return `#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct ${d.structName} {
     int dado;
     struct ${d.structName} *${d.nextPointerName};
-} ${d.structName};`
+} ${d.structName};`;
   }
 
-  if (structure === "lista-dupla"){
-    const d = data as DoubleListFormData
+  if (structure === "lista-dupla") {
+    const d = data as DoubleListFormData;
     return `#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct ${d.structName} {
     int dado;
-    struct ${d.structName} *${d.previousPointerName};
+    struct ${d.structName} *${d.prevPointerName};
     struct ${d.structName} *${d.nextPointerName};
-} ${d.structName};`
+} ${d.structName};`;
   }
 
-  if (structure === "pilha"){
-    const d = data as StackFormData
+  if (structure === "pilha") {
+    const d = data as StackFormData;
     return `#include <stdio.h>
 #include <stdlib.h>
   
@@ -68,11 +78,11 @@ typedef struct ${d.structName} {
 typedef struct {
     ${d.structName} *${d.topPointerName};
 } ${d.stackName};
-  }`
-}
-  
-  if (structure === "fila"){
-    const d = data as QueueFormData
+  }`;
+  }
+
+  if (structure === "fila") {
+    const d = data as QueueFormData;
     return `#include <stdio.h>
 #include <stdlib.h>
   
@@ -85,31 +95,37 @@ typedef struct {
     ${d.structName} *${d.startPointerName};
     ${d.structName} *${d.endPointerName};
 } ${d.queueName};
-  }`
+  }`;
   }
 
-  return ""
+  return "";
 }
 
 interface StructPanelProps {
-  activeStructure: string
-  onStructureChange: (value: string) => void
+  activeStructure: string;
+  onStructureChange: (value: string) => void;
+  onFormSubmit: (data: FormData) => void;
 }
 
-export default function StructPanel({ activeStructure, onStructureChange }: StructPanelProps) {
-  const [showCode, setShowCode] = useState(false)
-  const [submittedData, setSubmittedData] = useState<FormData | null>(null)
+export default function StructPanel({
+  activeStructure,
+  onStructureChange,
+  onFormSubmit,
+}: StructPanelProps) {
+  const [showCode, setShowCode] = useState(false);
+  const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
   function handleFormSubmit(data: FormData) {
-    setSubmittedData(data)
-    setShowCode(true)
+    setSubmittedData(data);
+    setShowCode(true);
+    onFormSubmit(data);
   }
-  
+
   function handleStructureChange(value: string) {
-  setShowCode(false)
-  setSubmittedData(null)
-  onStructureChange(value)
-}
+    setShowCode(false);
+    setSubmittedData(null);
+    onStructureChange(value);
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -119,9 +135,13 @@ export default function StructPanel({ activeStructure, onStructureChange }: Stru
         </span>
       </div>
 
-      <Tabs value={activeStructure} onValueChange={handleStructureChange} className="flex flex-col flex-1 overflow-hidden">
+      <Tabs
+        value={activeStructure}
+        onValueChange={handleStructureChange}
+        className="flex flex-col flex-1 overflow-hidden"
+      >
         <TabsList className="w-full justify-start rounded-none border-b border-border bg-transparent px-4 gap-1 h-10 shrink-0">
-          {STRUCTURES.map(s => (
+          {STRUCTURES.map((s) => (
             <TabsTrigger
               key={s.id}
               value={s.id}
@@ -132,7 +152,7 @@ export default function StructPanel({ activeStructure, onStructureChange }: Stru
           ))}
         </TabsList>
 
-        {STRUCTURES.map(s => (
+        {STRUCTURES.map((s) => (
           <TabsContent
             key={s.id}
             value={s.id}
@@ -151,12 +171,29 @@ export default function StructPanel({ activeStructure, onStructureChange }: Stru
                   {generateCode(activeStructure, submittedData)}
                 </pre>
               ) : (
-                <StructForm activeStructure={activeStructure} onSubmit={handleFormSubmit} />
+                <>
+                  {s.id === "lista-simples" && (
+                    <SimpleListForm
+                      onSubmit={(data) => handleFormSubmit(data)}
+                    />
+                  )}
+                  {s.id === "lista-dupla" && (
+                    <DoubleListForm
+                      onSubmit={(data) => handleFormSubmit(data)}
+                    />
+                  )}
+                  {s.id === "pilha" && (
+                    <StackForm onSubmit={(data) => handleFormSubmit(data)} />
+                  )}
+                  {s.id === "fila" && (
+                    <QueueForm onSubmit={(data) => handleFormSubmit(data)} />
+                  )}
+                </>
               )}
             </div>
           </TabsContent>
         ))}
       </Tabs>
     </div>
-  )
+  );
 }

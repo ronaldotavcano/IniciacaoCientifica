@@ -1,6 +1,6 @@
 import { Handle, Position } from "@xyflow/react"
 
-export function SimpleNode({ data }: { data: { value: number } }) {
+export function SimpleNode({ data }: { data: { value: number; nextPointerName?: string } }) {
   return (
     <div>
       <div className="flex border-[1.5px] border-gray-400 dark:border-border bg-card rounded-lg">
@@ -10,7 +10,7 @@ export function SimpleNode({ data }: { data: { value: number } }) {
         </div>
 
         <div className="border-l-[1.5px] border-gray-400 dark:border-border py-2 px-3 w-12 flex items-center justify-center">
-          <span className="text-[10px] text-muted-foreground font-mono">*prox</span>
+          <span className="text-[10px] text-muted-foreground font-mono">*{data.nextPointerName ?? "prox"}</span>
         </div>
 
       </div>
@@ -21,13 +21,13 @@ export function SimpleNode({ data }: { data: { value: number } }) {
   )
 }
 
-export function DoubleNode({ data }: { data: { value: number } }) {
+export function DoubleNode({ data }: { data: { value: number; prevPointerName?: string ;nextPointerName?: string  } }) {
   return (
     <div>
       <div className="flex border-[1.5px] border-gray-400 dark:border-border bg-card rounded-lg">
 
         <div className="relative border-r-[1.5px] border-gray-400 dark:border-border py-2 px-3 w-12 flex items-center justify-center">
-          <span className="text-[10px] text-muted-foreground font-mono">*ante</span>
+          <span className="text-[10px] text-muted-foreground font-mono">*{data.prevPointerName ?? "ante"}</span>
           <Handle type="source" position={Position.Left} id="source-ante" />
         </div>
 
@@ -36,7 +36,7 @@ export function DoubleNode({ data }: { data: { value: number } }) {
         </div>
 
         <div className="relative border-l-[1.5px] border-gray-400 dark:border-border py-2 px-3 w-12 flex items-center justify-center">
-          <span className="text-[10px] text-muted-foreground font-mono">*prox</span>
+          <span className="text-[10px] text-muted-foreground font-mono">*{data.nextPointerName ?? "prox"}</span>
           <Handle type="source" position={Position.Right} id="source-prox" />
         </div>
 
@@ -48,13 +48,13 @@ export function DoubleNode({ data }: { data: { value: number } }) {
   )
 }
 
-export function StackNode({ data }: { data: { value: number } }) {
+export function StackNode({ data }: { data: { value: number ; nextPointerName?: string } }) {
   return (
     <div>
       <div className="flex flex-col border-[1.5px] border-gray-400 dark:border-border bg-card rounded-lg">
 
       <div className="border-b-[1.5px] border-gray-400 dark:border-border py-2 px-3 flex items-center justify-center">
-        <span className="text-[10px] text-muted-foreground font-mono">*prox</span>
+        <span className="text-[10px] text-muted-foreground font-mono">*{data.nextPointerName ?? "prox"}</span>
       </div>
 
       <div className="py-2 px-4 text-foreground font-medium flex items-center justify-center">
