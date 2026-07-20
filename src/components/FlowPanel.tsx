@@ -1,19 +1,14 @@
-import {
-  ReactFlow,
-  Background,
-  Controls,
-  BackgroundVariant,
-  type Node,
-  type Edge,
-} from "@xyflow/react";
+import {ReactFlow, Background, Controls, BackgroundVariant, type Node, type Edge} from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { DoubleNode, SimpleNode, StackNode } from "./nodes/StructNodes";
+import { DoubleNode, SimpleNode, StackNode, NullNode } from "./nodes/StructNodes";
+import { type FormData } from "@/types/StructTypes"
 
 const nodeTypes = {
   "lista-simples": SimpleNode,
   "lista-dupla": DoubleNode,
-  pilha: StackNode,
-  fila: SimpleNode,
+  "pilha": StackNode,
+  "fila": SimpleNode,
+  "null": NullNode,
 };
 
 const STRUCTURE_NODES: Record<string, Node[]> = {
@@ -158,24 +153,52 @@ export default function FlowPanel({
   formData,
 }: FlowPanelProps) {
   function buildNodes() {
-    const base = STRUCTURE_NODES[activeStructure] ?? [];
-    if (!formData) return base;
+  const base = STRUCTURE_NODES[activeStructure] ?? []
 
-    return base.map((node) => ({
-      ...node,
-      data: {
-        ...node.data,
-        nextPointerName:
-          "nextPointerName" in formData ? formData.nextPointerName : undefined,
-        prevPointerName:
-          "previousPointerName" in formData
-            ? formData.previousPointerName
-            : undefined,
-        topPointerName:
-          "topPointerName" in formData ? formData.topPointerName : undefined,
-      },
-    }));
+  const nodes = formData ? base.map((node) => ({...node, data: {
+          ...node.data,
+          nextPointerName: "nextPointerName" in formData ? formData.nextPointerName : undefined,
+          prevPointerName: "prevPointerName" in formData ? formData.prevPointerName : undefined,
+          topPointerName: "topPointerName" in formData ? formData.topPointerName : undefined,
+        },
+      }))
+    : base
+
+  const lastNode = base[base.length - 1]
+  if (!lastNode) return nodes
+
+  const isVertical = activeStructure === "pilha"
+  const nullPosition = {
+    x: isVertical ? lastNode.position.x : lastNode.position.x + 200,
+    y: isVertical ? lastNode.position.y + 200 : lastNode.position.y,
   }
+
+  const nullNode = {
+    id: "null-node",
+    type: "null",
+    position: nullPosition,
+    data: {},
+  }
+
+  return [...nodes, nullNode]
+}
+
+function buildEdges() {
+  const base = STRUCTURE_EDGES[activeStructure] ?? []
+  const nodes = STRUCTURE_NODES[activeStructure] ?? []
+  if (!nodes.length) return base
+
+  const lastNodeId = nodes[nodes.length - 1].id
+
+  const nullEdge = {
+    id: "e-null",
+    source: lastNodeId,
+    target: "null-node",
+    animated: true,
+  }
+
+  return [...base, nullEdge]
+}
 
   return (
     <div className="flex flex-col h-full">
@@ -188,7 +211,7 @@ export default function FlowPanel({
         <ReactFlow
           nodeTypes={nodeTypes}
           nodes={buildNodes()}
-          edges={STRUCTURE_EDGES[activeStructure] ?? []}
+          edges={buildEdges()}
           fitView
           proOptions={{ hideAttribution: false }}
         >

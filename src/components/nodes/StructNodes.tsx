@@ -68,3 +68,16 @@ export function StackNode({ data }: { data: { value: number ; nextPointerName?: 
     </div>
   )
 }
+
+export function NullNode() {
+  return (
+    <div>
+      <div className="flex border-[1.5px] border-dashed border-gray-400 dark:border-border bg-transparent rounded-lg">
+        <div className="py-2 px-4 text-muted-foreground font-mono text-xs">
+          NULL
+        </div>
+      </div>
+      <Handle type="target" position={Position.Left} />
+    </div>
+  )
+}
