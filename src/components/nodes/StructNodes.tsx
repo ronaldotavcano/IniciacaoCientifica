@@ -77,7 +77,9 @@ export function NullNode() {
           NULL
         </div>
       </div>
-      <Handle type="target" position={Position.Left} />
+      <Handle type="target" position={Position.Left} id="target-left" />
+      <Handle type="target" position={Position.Top} id="target-top" />
+      <Handle type="target" position={Position.Bottom} id="target-bottom" />
     </div>
   )
 }

@@ -39,9 +39,9 @@ export default function SimpleListForm({ onSubmit }: SimpleListFormProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-muted-foreground">Nome Ponteiro Próximo</label>
+        <label className="text-sm text-muted-foreground">Nome Ponteiro Anterior</label>
         <input
-          name="nextPointerName"
+          name="prevPointerName"
           value={formData.prevPointerName}
           onChange={handleChange}
           placeholder="Digite o nome do ponteiro que apontará para o campo anterior"
