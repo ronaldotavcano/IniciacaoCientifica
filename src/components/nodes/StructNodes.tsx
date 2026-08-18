@@ -21,7 +21,7 @@ export function SimpleNode({ data }: { data: { value: number; nextPointerName?: 
   )
 }
 
-export function DoubleNode({ data }: { data: { value: number; prevPointerName?: string ;nextPointerName?: string  } }) {
+export function DoubleNode({ data }: { data: { value: number; prevPointerName?: string; nextPointerName?: string } }) {
   return (
     <div>
       <div className="flex border-[1.5px] border-gray-400 dark:border-border bg-card rounded-lg">
@@ -42,29 +42,27 @@ export function DoubleNode({ data }: { data: { value: number; prevPointerName?: 
 
       </div>
 
-      <Handle type="target" position={Position.Top} id="target-top" />
+      <Handle type="target" position={Position.Top}    id="target-top" />
       <Handle type="target" position={Position.Bottom} id="target-bottom" />
     </div>
   )
 }
 
-export function StackNode({ data }: { data: { value: number ; nextPointerName?: string } }) {
+export function StackNode({ data }: { data: { value: number; nextPointerName?: string } }) {
   return (
     <div>
       <div className="flex flex-col border-[1.5px] border-gray-400 dark:border-border bg-card rounded-lg">
-
-      <div className="border-b-[1.5px] border-gray-400 dark:border-border py-2 px-3 flex items-center justify-center">
-        <span className="text-[10px] text-muted-foreground font-mono">*{data.nextPointerName ?? "prox"}</span>
+        <div className="border-b-[1.5px] border-gray-400 dark:border-border py-2 px-3 flex items-center justify-center">
+          <span className="text-[10px] text-muted-foreground font-mono">*{data.nextPointerName ?? "prox"}</span>
+        </div>
+        <div className="py-2 px-4 text-foreground font-medium flex items-center justify-center">
+          {data.value}
+        </div>
       </div>
-
-      <div className="py-2 px-4 text-foreground font-medium flex items-center justify-center">
-        {data.value}
-      </div>
-
-      </div>
-
-      <Handle type="target" position={Position.Top} />
-      <Handle type="source" position={Position.Bottom} />
+      
+      <Handle type="target" position={Position.Top} id="target-top" style={{ left: "35%" }} />
+      <Handle type="source" position={Position.Bottom} id="source" />
+      <Handle type="source" position={Position.Top} id="source-top" style={{ left: "65%" }} />
     </div>
   )
 }

@@ -51,28 +51,47 @@ export default function HomePage() {
     })
   }
 
-  function handleInsertEnd(value: number) {
-    if (!submittedFormData) return
-    setDynamicNodes(prev => {
-      const isVertical = activeStructure === "pilha"
-      const last = prev[prev.length - 1]
-      const position = last
-        ? {
-            x: isVertical ? last.position.x : last.position.x + SPACING_H,
-            y: isVertical ? last.position.y + SPACING_V : last.position.y,
-          }
-        : { x: 80, y: 160 }
-      return [...prev, makeNode(value, position)]
-    })
-  }
+  const PILHA_BASE_Y = 160  
+  const PILHA_X = 80
+
+function handleInsertEnd(value: number) {
+  if (!submittedFormData) return
+  setDynamicNodes(prev => {
+    const isVertical = activeStructure === "pilha"
+
+    if (isVertical) {
+      const newNode = makeNode(value, { x: PILHA_X, y: PILHA_BASE_Y })
+      const shifted = prev.map(n => ({
+        ...n,
+        position: { x: n.position.x, y: n.position.y + SPACING_V }
+      }))
+      return [newNode, ...shifted]
+    }
+
+    const last = prev[prev.length - 1]
+    const position = last
+      ? { x: last.position.x + SPACING_H, y: last.position.y }
+      : { x: 80, y: 160 }
+    return [...prev, makeNode(value, position)]
+  })
+}
 
   function handleRemoveStart() {
     setDynamicNodes(prev => prev.slice(1))
   }
 
   function handleRemoveEnd() {
-    setDynamicNodes(prev => prev.slice(0, -1))
-  }
+  setDynamicNodes(prev => {
+    if (activeStructure === "pilha") {
+      const [, ...rest] = prev
+      return rest.map(n => ({
+        ...n,
+        position: { x: n.position.x, y: n.position.y - SPACING_V }
+      }))
+    }
+    return prev.slice(0, -1)
+  })
+}
 
   useEffect(() => {
     if (!isDragging) return
