@@ -9,11 +9,13 @@ export default function Header() {
     <header className=" sticky top-0 z-50 flex items-center justify-between h-14 px-6 bg-background border-b border-border ">
       <div className="flex items-center gap-2">
         <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold select-none">
-          P
+          <a href="/">P</a>
         </div>
-        <span className="font-semibold text-base tracking-tight">
-          meu<span className="text-primary">Ponteiro</span>
-        </span>
+        <a href="/">
+          <span className="font-semibold text-base tracking-tight">
+            meu<span className="text-primary">Ponteiro</span>
+          </span>
+        </a>
       </div>
  
       <nav className="flex items-center gap-1">
